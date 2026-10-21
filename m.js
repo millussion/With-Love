@@ -1,4 +1,5 @@
-﻿const $ = (selector) => document.querySelector(selector);
+window.$ = (selector) => document.querySelector(selector);
+const $ = window.$;
 
 // Report errors to the server so problems on phones are visible in its log.
 function reportClient(kind, detail) {
@@ -40,6 +41,11 @@ const DOT_LETTERS = {
   o: ['....', '....', '.##.', '#..#', '#..#', '#..#', '.##.'],
   r: ['...', '...', '#.#', '##.', '#..', '#..', '#..'],
   y: ['....', '....', '#..#', '#..#', '#..#', '.###', '...#', '...#', '.##.'],
+  w: ['.....', '.....', '#...#', '#...#', '#.#.#', '##.##', '.#.#.'],
+  i: ['.#.', '...', '.#.', '.#.', '.#.', '.#.', '.#.'],
+  h: ['#...', '#...', '###.', '#..#', '#..#', '#..#', '#..#'],
+  l: ['#.', '#.', '#.', '#.', '#.', '#.', '.#'],
+  v: ['....', '....', '#..#', '#..#', '#..#', '.##.', '..#.'],
 };
 
 function seededRandom(seed) { return () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; }; }
@@ -49,8 +55,10 @@ function dotWord(word, { seed = 5150, gap = 1, jitter = 0.14, rMin = 0.5, rMax =
   const random = seededRandom(seed);
   const dots = [];
   let offset = 0, rows = 0;
-  for (const letter of word) {
+  for (const letter of String(word).toLowerCase()) {
+    if (letter === ' ') { offset += 2 + gap; continue; }
     const glyph = DOT_LETTERS[letter];
+    if (!glyph) { offset += 1 + gap; continue; }
     rows = Math.max(rows, glyph.length);
     glyph.forEach((row, y) => [...row].forEach((cell, x) => {
       if (cell !== '#') return;
@@ -58,7 +66,7 @@ function dotWord(word, { seed = 5150, gap = 1, jitter = 0.14, rMin = 0.5, rMax =
     }));
     offset += glyph[0].length + gap;
   }
-  return { dots, width: offset - gap, rows, random };
+  return { dots, width: Math.max(1, offset - gap), rows, random };
 }
 
 let svgIds = 0;
@@ -134,7 +142,8 @@ async function buildTagline(host) {
   setInterval(() => { frame = (frame + 1) % frames.length; image.setAttribute('href', frames[frame]); }, slow ? 2400 : 700);
 }
 document.querySelectorAll('.dot-tagline').forEach(buildTagline);
-const screens = { landing: $('#screen-landing'), story: $('#screen-story'), camera: $('#screen-camera') };
+window.screens = { landing: $('#screen-landing'), story: $('#screen-story'), camera: $('#screen-camera') };
+const screens = window.screens;
 const canvas = $('#preview');
 const ctx = canvas.getContext('2d', { willReadFrequently: true });
 const fields = { caption: $('#field-caption'), feeling: $('#field-feeling'), location: $('#field-location'), date: $('#field-date'), time: $('#field-time') };
@@ -142,7 +151,8 @@ const FEELINGS = ['cozy', 'happy', 'calm', 'nostalgic', 'grateful', 'giddy'];
 // Long enough that the first blink always plays (the GIF holds its open-eye frame 650ms).
 const MIN_LOADING_MS = 700;
 
-const state = { file: null, signedIn: false, defaults: {}, template: 'stars', paper: 'crumpled', paperColor: 'white', vectorColor: 'white', color: 'yellow', palettes: {}, renderToken: 0, lastAction: null, inAppStyleChanges: 0 };
+window.state = { file: null, signedIn: false, defaults: {}, template: 'stars', paper: 'crumpled', paperColor: 'white', vectorColor: 'white', color: 'yellow', palettes: {}, renderToken: 0, lastAction: null, inAppStyleChanges: 0 };
+const state = window.state;
 // "pop": the cut-out pieces cast a shadow on the paper. On by default; each phone remembers a choice.
 state.pop = (() => { try { return localStorage.getItem('withlove-pop') !== '0'; } catch { return true; } })();
 // Guests (in-app browsers and normal browsers alike) can try any frame and take ONE With Love out
@@ -168,16 +178,17 @@ function show(name) {
   state.shown = name; // the modes sheet marks the one you are in
   if (name !== 'camera') stopCamera();
   $('#feedback-open').hidden = !state.feedbackOn || name === 'camera'; // it would cover the camera controls
-  Object.entries(screens).forEach(([key, node]) => { node.hidden = key !== name; });
+  Object.entries(screens).forEach(([key, node]) => { if (node) node.hidden = key !== name; });
   window.scrollTo(0, 0);
 }
+window.show = show;
 
 let loadingDepth = 0;
 async function withLoading(line, task) {
   const loading = $('#loading');
-  const setLine = (text) => { $('#loading-line').textContent = text; };
+  const setLine = (text) => { const el = $('#loading-line'); if (el) el.textContent = text; };
   setLine(line);
-  loadingDepth += 1; loading.hidden = false;
+  loadingDepth += 1; if (loading) loading.hidden = false;
   const started = performance.now();
   try {
     return await task(setLine);
@@ -185,17 +196,20 @@ async function withLoading(line, task) {
     const wait = MIN_LOADING_MS - (performance.now() - started);
     if (wait > 0) await new Promise((resolve) => setTimeout(resolve, wait));
     loadingDepth -= 1;
-    if (!loadingDepth) loading.hidden = true;
+    if (!loadingDepth && loading) loading.hidden = true;
   }
 }
+window.withLoading = withLoading;
 
-function openSheet(id) { $('#sheet-backdrop').hidden = false; $(id).hidden = false; }
+function openSheet(id) { const b = $('#sheet-backdrop'); if (b) b.hidden = false; const s = $(id); if (s) s.hidden = false; }
+window.openSheet = openSheet;
 function closeSheets() {
   clearInterval(state.demoTimer); state.demoTimer = null; // a letter's live demo
-  $('#sheet-backdrop').hidden = true;
+  const b = $('#sheet-backdrop'); if (b) b.hidden = true;
   document.querySelectorAll('.sheet').forEach((sheet) => { sheet.hidden = true; });
   if (state.styleDirty) { state.styleDirty = false; renderPickers(); rerender('Tinting the paper…'); }
 }
+window.closeSheets = closeSheets;
 
 function showError(detail, retry) {
   state.lastAction = retry;
@@ -1412,7 +1426,7 @@ function renderSwatches() {
 // Opens the share sheet (Save Image / Save Video puts it in Photos). Must run inside a tap.
 // Every With Love they really take out counts towards the home-screen offer (after the 3rd).
 function countExport(file) {
-  if (file?.With LoveFrom === 'recap') { try { localStorage.setItem('withlove-recap-saved', '1'); } catch {} paintDropDots(); } // the frames heart can rest now
+  if (file?.withloveFrom === 'recap') { try { localStorage.setItem('withlove-recap-saved', '1'); } catch {} paintDropDots(); } // the frames heart can rest now
   try { localStorage.setItem('withlove-exports', String(Number(localStorage.getItem('withlove-exports') || 0) + 1)); } catch {}
   // After the share sheet closes: the survey (not taken yet) goes first, then the home-screen offer
   // (from the 3rd), otherwise the rating.
@@ -1440,7 +1454,7 @@ async function shareFile(file, want = 'save') {
       if (IN_APP || (image && (!ANDROID_DOWNLOADS || again))) { if (image) return holdToSave(file, { counted: again, retry: again }); }
       else if (!ANDROID_DOWNLOADS || again) return await saveVideoByLink(file, { counted: again });
       else {
-        track('export_done', { file: file.type, from: file.With LoveFrom || null, result: 'downloaded', android: true, browser: androidBrowser() }); markGuestExportUsed(); countExport(file);
+        track('export_done', { file: file.type, from: file.withloveFrom || null, result: 'downloaded', android: true, browser: androidBrowser() }); markGuestExportUsed(); countExport(file);
         const link = document.createElement('a'); link.href = URL.createObjectURL(file); link.download = file.name; document.body.append(link); link.click(); link.remove();
         setTimeout(() => URL.revokeObjectURL(link.href), 60000);
         androidSaves.set(saveKey(file), Date.now());
@@ -1452,16 +1466,16 @@ async function shareFile(file, want = 'save') {
     }
     if (navigator.canShare && navigator.canShare({ files: [file] })) {
       // Files only: a title or text alongside makes Instagram drop out of the iOS share sheet.
-      try { await navigator.share({ files: [file] }); track('export_done', { file: file.type, from: file.With LoveFrom || null, result: 'shared', inApp: IN_APP || null }); markGuestExportUsed(); countExport(file); return; } catch (error) { if (error.name === 'AbortError') { track('export_done', { file: file.type, from: file.With LoveFrom || null, result: 'cancelled', inApp: IN_APP || null }); return; } if (error.name !== 'NotAllowedError' && !IN_APP) throw error; }
+      try { await navigator.share({ files: [file] }); track('export_done', { file: file.type, from: file.withloveFrom || null, result: 'shared', inApp: IN_APP || null }); markGuestExportUsed(); countExport(file); return; } catch (error) { if (error.name === 'AbortError') { track('export_done', { file: file.type, from: file.withloveFrom || null, result: 'cancelled', inApp: IN_APP || null }); return; } if (error.name !== 'NotAllowedError' && !IN_APP) throw error; }
     }
     // Inside apps a download link goes nowhere: show the picture big so a long press saves it.
     // (Videos can't be saved that way, so those go to the browser.)
     if (IN_APP) {
-      if (!file.type.startsWith('image/')) { track('export_done', { file: file.type, from: file.With LoveFrom || null, result: 'video_blocked', inApp: IN_APP }); showInAppGate(want); return; }
+      if (!file.type.startsWith('image/')) { track('export_done', { file: file.type, from: file.withloveFrom || null, result: 'video_blocked', inApp: IN_APP }); showInAppGate(want); return; }
       return holdToSave(file);
     }
     // Desktop browsers (or a tap that expired): a normal download.
-    track('export_done', { file: file.type, from: file.With LoveFrom || null, result: 'downloaded' }); countExport(file);
+    track('export_done', { file: file.type, from: file.withloveFrom || null, result: 'downloaded' }); countExport(file);
     const link = document.createElement('a'); link.href = URL.createObjectURL(file); link.download = file.name; link.click();
     setTimeout(() => URL.revokeObjectURL(link.href), 4000);
   } finally { guestExportPending = false; }
@@ -1484,10 +1498,10 @@ async function saveVideoByLink(file, { counted = false } = {}) {
       url = body.url;
     });
   } catch (error) {
-    reportClient('save_link', error); track('export_done', { file: file.type, from: file.With LoveFrom || null, result: 'link_failed', android: true, browser: androidBrowser() });
+    reportClient('save_link', error); track('export_done', { file: file.type, from: file.withloveFrom || null, result: 'link_failed', android: true, browser: androidBrowser() });
     saveToast('Your video didn’t save', 'Try again in a moment.'); return;
   }
-  track('export_done', { file: file.type, from: file.With LoveFrom || null, result: 'download_link', android: true, browser: androidBrowser(), retry: counted || null });
+  track('export_done', { file: file.type, from: file.withloveFrom || null, result: 'download_link', android: true, browser: androidBrowser(), retry: counted || null });
   if (!counted) { markGuestExportUsed(); countExport(file); }
   const link = document.createElement('a'); link.href = url; link.download = file.name || ''; document.body.append(link); link.click(); link.remove();
   androidSaves.set(saveKey(file), Date.now());
@@ -1521,7 +1535,7 @@ function holdToSave(file, { counted = false, retry = false } = {}) {
   openSheet('#hold-sheet');
   if (counted) return; // already counted by the download it backs up
   markGuestExportUsed();
-  track('export_done', { file: file.type, from: file.With LoveFrom || null, result: 'hold_shown', inApp: IN_APP }); countExport(file);
+  track('export_done', { file: file.type, from: file.withloveFrom || null, result: 'hold_shown', inApp: IN_APP }); countExport(file);
 }
 
 // Anything that took too long to make (the animation) is offered with a button, so the share sheet
@@ -1773,6 +1787,7 @@ if (new URLSearchParams(location.search).has('reset_prompts')) {
   history.replaceState(null, '', location.pathname);
 }
 const store = { get: (k) => { try { return localStorage.getItem(k); } catch { return null; } }, set: (k, v) => { try { localStorage.setItem(k, v); } catch {} } };
+window.store = store;
 const sessionOnce = (k) => { try { if (sessionStorage.getItem(k)) return false; sessionStorage.setItem(k, '1'); return true; } catch { return true; } };
 // Unasked pop-ups (docs/product-ux-rules.md): none until the person has made a card this visit, then
 // at most one per visit. Anything opened by a tap doesn't count.
@@ -1933,6 +1948,7 @@ async function signOut() {
 
 // ---- Frame & paper galleries -------------------------------------------------
 const gallery = { revision: null, templates: [], papers: [], themes: {}, byKey: {}, paperByKey: {}, theme: 'foryou', masks: new Map(), drawToken: 0 };
+window.gallery = gallery;
 // Suggestions only use signals we actually have: the chosen feeling and what this device used before.
 const FEELING_THEMES = { cozy: ['nature', 'ornaments'], happy: ['stars', 'animals'], calm: ['nature'], nostalgic: ['ornaments'], grateful: ['words', 'nature'], giddy: ['animals', 'quirky'] };
 const BOOTH_TILE = '__booth'; // the photobooth's tile under the October chip (booth.js)
@@ -2243,6 +2259,7 @@ $('#camera-button').addEventListener('click', () => openStartChooser()); // reca
 // top (in the chosen vector colour). "change frame" opens the frame list with stamps first; in-app
 // visitors can pick frames there without using editor changes.
 const cam = { stream: null, el: null, running: false, facing: 'environment', requestId: 0, motif: null, motifKey: '', z: 1, lensFactor: 1, digital: 1, lenses: {}, mode: 'photo', recorder: null };
+window.cam = cam;
 const motifCache = new Map(); // `${template}:${colour}` → tinted canvas
 function stopCamera() {
   cam.requestId += 1; // discard a permission request still pending when the user leaves/switches

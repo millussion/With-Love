@@ -1,4 +1,4 @@
-﻿// Google sign-in. Google Identity Services redirects back to withlove's own /auth/google (so Google's
+// Google sign-in. Google Identity Services redirects back to withlove's own /auth/google (so Google's
 // screen reads "continue to withlove.techieslab.app", not the Supabase domain); the server exchanges
 // Google's ID token with Supabase and answers with its own signed cookie, so every render is gated
 // server-side. Without Google/Supabase config (local dev with no .env) it falls back to the demo cookie.
@@ -80,5 +80,5 @@
 
   const signOut = () => fetch('/session/logout', { method: 'POST' }).then((response) => response.json());
 
-  window.withloveAuth = window.withloveAuth = { ready, mountButton, prepare, takeDraft, signOut };
+  window.withloveAuth = { ready, mountButton, prepare, takeDraft, signOut };
 })();
