@@ -1,0 +1,9 @@
+# Cache y logs de HTTrack
+hts-cache/
+hts-log.txt
+
+# Archivos de respaldo y temporales
+*.tmp
+*.bak
+.DS_Store
+Thumbs.db
