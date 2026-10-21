@@ -2904,7 +2904,7 @@ async function reportInviteJoin() {
   } catch {}
 }
 
-$('#me-gems').addEventListener('click', () => openPerks({ from: 'profile_pill' }));
+$('#me-gems')?.addEventListener('click', () => openPerks({ from: 'profile_pill' }));
 // Instagram / Threads / X from the profile's connect row.
 document.querySelectorAll('.connect-icon[href]').forEach((link) => link.addEventListener('click', () => track('mailbox', { action: 'connect', to: new URL(link.href).hostname.replace(/^www\./, '') })));
 // ---- Move photo: drag/pinch the photo inside the frame ----

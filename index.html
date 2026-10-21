@@ -106,7 +106,7 @@
           <p class="recap-note" id="recap-screen-note" hidden>sample · your 6 photos become the stamps</p>
           <div class="recap-actions" id="recap-sample-actions">
             <button class="button primary jewel-cta" id="recap-start" type="button">start my sept recap</button>
-            <p class="recap-reward">✦ Share your recap on Instagram, tag <b>With Love</b> and get <b>200 With Lovees</b>. We’ll DM you to top up.</p>
+            <p class="recap-reward">✦ Share your recap on Instagram, tag <b>With Love</b> and get <b>200 gems</b>. We’ll DM you to top up.</p>
             <button class="recap-exit" type="button" data-recap-exit>or make a regular With Love →</button>
           </div>
           <div class="recap-actions" id="recap-mine-actions" hidden>
@@ -115,7 +115,7 @@
             <p class="recap-note small">tap a stamp to move its photo</p>
             <div class="card-actions recap-export"><button class="icon-action primary" id="recap-share" type="button" aria-label="Share the 9:16 story with background"></button><button class="icon-action" id="recap-save" type="button" aria-label="Save the 4:5 card to Photos"></button><button class="icon-action" id="recap-animation" type="button" aria-label="Export a 3D video of your recap"></button></div>
             <div class="recap-row"><button class="button ghost" id="recap-shuffle" type="button">shuffle</button><button class="button ghost" id="recap-repick" type="button">pick again</button></div>
-            <p class="recap-reward">✦ Share your recap on Instagram, tag <b>With Love</b> and get <b>200 With Lovees</b>. We’ll DM you to top up.</p>
+            <p class="recap-reward">✦ Share your recap on Instagram, tag <b>With Love</b> and get <b>200 gems</b>. We’ll DM you to top up.</p>
             <button class="recap-exit" type="button" data-recap-exit>now make a regular With Love →</button>
           </div>
           <!-- Paper and colour picks: hidden since 2 Oct (Maddy: card, start, reward, regular With Love only). recap.js still fills them. -->
@@ -201,7 +201,7 @@
             <div class="select-row" id="pop-row"><span>pop <span class="pop-spark" aria-hidden="true">✦</span> <span class="pop-hint">pieces cast a shadow</span></span><button type="button" class="toggle" id="pop-toggle" role="switch" aria-checked="true" aria-label="Pop: pieces cast a shadow"><span></span></button></div>
           </div>
           <!-- Photobooth cards only (m.css .booth-studio): an inline nudge to post it, no pop-up. -->
-          <p class="recap-reward booth-reward">✦ Post your photobooth on Instagram, tag <b>With Love</b> and get <b>200 With Lovees</b>. We’ll DM you to top up.</p>
+          <p class="recap-reward booth-reward">✦ Post your photobooth on Instagram, tag <b>With Love</b> and get <b>200 gems</b>. We’ll DM you to top up.</p>
           <div class="card-actions" id="actions"></div>
           <a class="follow-pill" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor"/></svg>follow <b>With Love</b> for aesthetic updates</a>
           <p class="built-by">proudly built by <a href="https://www.instagram.com/techies.lab/" target="_blank" rel="noopener">Techies Lab</a></p>
@@ -218,7 +218,7 @@
     <div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
     <!-- Opened straight from the button: no in-between sheet (iPhone still shows its own Library/Camera menu). -->
     <input id="upload-input" type="file" accept="image/*,.heic,.heif,video/*" hidden />
-    <!-- Today's check-in With Lovees just landed (checkin.js). -->
+    <!-- Today's check-in gems just landed (checkin.js). -->
     <div class="checkin-toast" id="save-toast" hidden role="status"><div id="save-toast-text"></div></div>
     <div class="checkin-toast" id="checkin-toast" hidden role="status"><div id="checkin-toast-text"></div><button type="button" class="pill-button" id="checkin-toast-push" hidden>🔔 remind me daily</button><button type="button" class="checkin-toast-x" id="checkin-toast-x" aria-label="Close">✕</button></div>
     <!-- "How was your September?" pop-up for people already using With Love (recap.js). -->
@@ -228,7 +228,7 @@
       <h2 id="recap-invite-title">How was your September? ✦</h2>
       <p class="sheet-note">We made a special template to recap your month: pick 6 photos and they become a bedazzled stamp collage.</p>
       <div class="invite-demo" id="recap-invite-demo"><canvas width="1080" height="1350"></canvas><canvas width="1080" height="1350"></canvas><canvas width="1080" height="1350"></canvas></div>
-      <div class="invite-reward"><b>Get 200 With Lovees</b><span>Post your recap on Instagram and tag <b>With Love</b>. Our admin will DM you for your email and top you up right away.</span></div>
+      <div class="invite-reward"><b>Get 200 gems</b><span>Post your recap on Instagram and tag <b>With Love</b>. Our admin will DM you for your email and top you up right away.</span></div>
       <button class="button primary jewel-cta" id="recap-invite-go" type="button">Make my September recap</button>
       <button class="button ghost" id="recap-invite-later" type="button">Maybe later</button>
     </div>
@@ -279,7 +279,7 @@
           <span class="me-star-edit" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 16.5 9.8-9.8 2.5 2.5L7.5 19H5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
         </button>
         <input id="me-photo-input" type="file" accept="image/*,.heic,.heif" hidden />
-        <div class="me-who"><div class="me-name-row"><h2 id="me-title">You</h2><button type="button" class="me-With Lovees" id="me-With Lovees" hidden aria-label="Your With Lovees"><img src="vision/coin.svg" alt="" /><b id="me-With Lovee-number">0</b></button></div><p class="sheet-note" id="me-email"></p></div>
+        <div class="me-who"><div class="me-name-row"><h2 id="me-title">You</h2><button type="button" class="me-gems" id="me-gems" hidden aria-label="Your gems"><img src="vision/coin.svg" alt="" /><b id="me-gem-number">0</b></button></div><p class="sheet-note" id="me-email"></p></div>
       </div>
       <div class="me-actions" id="me-actions"></div>
       <p class="sheet-note small"><button type="button" data-privacy>Privacy</button> · <a href="#/support" target="_blank" rel="noopener">Support</a></p>
@@ -315,25 +315,25 @@
         <a class="privacy-link" href="#/privacy" target="_blank" rel="noopener">Privacy policy</a>
       </div>
     </div>
-    <!-- Share for perks: invite friends, earn With Lovees, and a look at what With Love is growing into. -->
+    <!-- Share for perks: invite friends, earn gems, and a look at what With Love is growing into. -->
     <div class="sheet perks-sheet" id="perks-sheet" hidden role="dialog" aria-labelledby="perks-title">
       <button class="sheet-x" type="button" data-close aria-label="Close">✕</button>
       <div class="perks-hero">
-        <div><h2 id="perks-title">Invite friends,<br /><em>earn With Lovees</em></h2>
-        <div class="With Lovee-row"><div class="With Lovee-count"><img src="vision/coin.svg" alt="" /><span><b id="With Lovee-number">0</b> With Lovees</span></div><button type="button" class="how-link" id="perks-how" aria-expanded="false" aria-controls="how-steps">how it works</button>
-          <div class="how-pop" id="how-steps" hidden role="dialog" aria-label="How With Lovees work">
+        <div><h2 id="perks-title">Invite friends,<br /><em>earn gems</em></h2>
+        <div class="gem-row"><div class="gem-count"><img src="vision/coin.svg" alt="" /><span><b id="gems-number">0</b> gems</span></div><button type="button" class="how-link" id="perks-how" aria-expanded="false" aria-controls="how-steps">how it works</button>
+          <div class="how-pop" id="how-steps" hidden role="dialog" aria-label="How gems work">
             <button type="button" class="how-close" id="how-close" aria-label="Close">✕</button>
             <ol>
               <li><b>You sign in</b> and share your invite link.</li>
               <li><b>Your friend opens it and signs in with Google.</b> They need to be new to With Love.</li>
-              <li><b>You both get <em>100 With Lovees</em></b>, right away.</li>
+              <li><b>You both get <em>100 gems</em></b>, right away.</li>
             </ol>
             <p>Invite as many friends as you like. Each friend can only be invited once, and you can't invite yourself.</p>
           </div></div></div>
         <div class="coin-stage" aria-hidden="true"><span class="coin3d" id="coin3d"></span><span class="coin-shadow"></span></div>
       </div>
       <p class="perks-lead" id="perks-welcome" hidden></p>
-      <p class="perks-lead">With Lovees are little <em>kutesie tokens</em>. Invite a friend and <em>you both get 100</em>. As With Love grows, you'll spend them on <em>exclusive frames</em> and <em>new features</em>, before anyone else.</p>
+      <p class="perks-lead">gems are little <em>kutesie tokens</em>. Invite a friend and <em>you both get 100</em>. As With Love grows, you'll spend them on <em>exclusive frames</em> and <em>new features</em>, before anyone else.</p>
       <p class="card-label">what we're building</p>
       <div class="vision-row">
         <figure class="vision-card">
@@ -385,10 +385,10 @@
       <button class="sheet-x" type="button" id="survey-close" aria-label="Close">✕</button>
       <div class="survey-intro" id="survey-intro">
         <video class="survey-video" src="mail/video-templates5e1f.mp4?v=2" poster="mail/video-templates.jpg" muted loop playsinline autoplay></video>
-        <h2 id="survey-title"><em>300 With Lovees</em> + first access to viral video templates</h2>
+        <h2 id="survey-title"><em>300 gems</em> + first access to viral video templates</h2>
         <p class="sheet-note survey-quick">18 quick taps, about 3 minutes. Tell us what you'd love next.</p>
-        <p class="survey-free"><b>With Love is free, always.</b> Exclusive stuff unlocks with With Lovees, never money.</p>
-        <button class="button primary survey-cta" id="survey-start" type="button"><img class="coin-inline" src="vision/coin.svg" alt="" />Get 300 With Lovees →</button>
+        <p class="survey-free"><b>With Love is free, always.</b> Exclusive stuff unlocks with gems, never money.</p>
+        <button class="button primary survey-cta" id="survey-start" type="button"><img class="coin-inline" src="vision/coin.svg" alt="" />Get 300 gems →</button>
         <button class="button ghost" id="survey-later" type="button">Maybe later</button>
       </div>
       <form class="survey-form" id="survey-form" hidden>
@@ -404,7 +404,7 @@
       <div class="survey-thanks" id="survey-thanks" hidden>
         <video class="survey-video" src="mail/video-templates5e1f.mp4?v=2" poster="mail/video-templates.jpg" muted loop playsinline autoplay></video>
         <h2>You're in! ✦</h2>
-        <p class="sheet-note">Thank you! <em>+300 With Lovees</em> are in your profile, and you have <em>early access to viral video templates</em>: we'll let you know in your mailbox the moment they're ready.</p>
+        <p class="sheet-note">Thank you! <em>+300 gems</em> are in your profile, and you have <em>early access to viral video templates</em>: we'll let you know in your mailbox the moment they're ready.</p>
         <button class="button primary" type="button" data-close>Back to With Love</button>
       </div>
     </div>

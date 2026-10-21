@@ -329,7 +329,7 @@ body:has(.home-gate:not([hidden]), .inapp-gate:not([hidden])) .feedback-fab { di
 .menu-arrow.at-bottom span { margin:0 0 6px; }
 @keyframes point-down2 { 50% { transform:translateY(8px) rotate(135deg); } }
 
-/* Follow @kee_uc: a small dark-pink pill above the Techies Lab credit */
+/* Follow @withlove: a small dark-pink pill above the Techies Lab credit */
 .follow-pill { display:inline-flex; align-items:center; gap:6px; margin:14px auto 0; padding:6px 12px; border-radius:999px; background:rgba(255,200,221,.45); box-shadow:inset 0 0 0 1px rgba(194,65,127,.35); color:#b8336f; font:12px var(--font); text-decoration:none; }
 .follow-pill svg { width:15px; height:15px; }
 .follow-pill b { font-weight:700; }

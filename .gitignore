@@ -7,3 +7,8 @@ hts-log.txt
 *.bak
 .DS_Store
 Thumbs.db
+view-source*
+original-view-source.html
+With love*
+With Love*
+
